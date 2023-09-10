@@ -1,6 +1,8 @@
 package br.com.event.management.system.common.domain.valueobjects;
 
 import br.com.event.management.system.common.domain.exception.InvalidCpfException;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.util.Assert;
 
 public record Cpf(String value) implements ValueObject {
@@ -45,6 +47,11 @@ public record Cpf(String value) implements ValueObject {
     ) {
       throw new InvalidCpfException("Cpf is invalid");
     }
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
 }

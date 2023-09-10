@@ -1,6 +1,8 @@
 package br.com.event.management.system.common.domain.valueobjects;
 
 import br.com.event.management.system.common.domain.EntityId;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.UUID;
 
@@ -18,4 +20,8 @@ public record PartnerId(UUID value) implements EntityId<UUID> {
     return new PartnerId(UUID.fromString(value));
   }
 
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+  }
 }
