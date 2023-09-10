@@ -3,12 +3,18 @@ package br.com.event.management.system.events.domain;
 import br.com.event.management.system.common.domain.AggregateRoot;
 import br.com.event.management.system.common.domain.valueobjects.EventId;
 import br.com.event.management.system.common.domain.valueobjects.PartnerId;
+import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
+@Getter
 public class Event extends AggregateRoot<EventId> {
 
   private final String name;
@@ -19,11 +25,13 @@ public class Event extends AggregateRoot<EventId> {
 
   private final boolean published;
 
-  private final Long totalSpots;
-
   private final Long totalSpotsReserved;
 
   private final PartnerId partnerId;
+
+  private final Set<EventSection> sections = new HashSet<>(0);
+
+  private Long totalSpots;
 
   public Event(
     final EventId id,
@@ -33,7 +41,8 @@ public class Event extends AggregateRoot<EventId> {
     final boolean published,
     final Long totalSpots,
     final Long totalSpotsReserved,
-    final PartnerId partnerId
+    final PartnerId partnerId,
+    final Collection<EventSection> sections
   ) {
     super(id);
     this.name = name;
@@ -43,6 +52,7 @@ public class Event extends AggregateRoot<EventId> {
     this.totalSpots = totalSpots;
     this.totalSpotsReserved = totalSpotsReserved;
     this.partnerId = partnerId;
+    this.sections.addAll(sections);
   }
 
   public static Event create(final CreateEventCommand command) {
@@ -54,8 +64,19 @@ public class Event extends AggregateRoot<EventId> {
       false,
       0L,
       0L,
-      command.partnerId()
+      command.partnerId(),
+      new HashSet<>()
     );
+  }
+
+  public void addSection(final AddEventSectionCommand command) {
+    final var section = EventSection.create(command);
+    this.sections.add(section);
+    this.totalSpots += section.getTotalSpots();
+  }
+
+  public Set<EventSection> getSections() {
+    return Collections.unmodifiableSet(this.sections);
   }
 
   @Override
