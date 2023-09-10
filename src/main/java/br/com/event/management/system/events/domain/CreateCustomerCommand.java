@@ -1,4 +1,6 @@
 package br.com.event.management.system.events.domain;
 
-public record CreateCustomerCommand(String name, String cpf) {
+import br.com.event.management.system.common.domain.valueobjects.Name;
+
+public record CreateCustomerCommand(Name name, String cpf) {
 }

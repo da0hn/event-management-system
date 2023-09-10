@@ -1,6 +1,9 @@
 package br.com.event.management.system.events.domain;
 
 import br.com.event.management.system.common.domain.AggregateRoot;
+import br.com.event.management.system.common.domain.valueobjects.Name;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.UUID;
 
@@ -10,9 +13,9 @@ public class Customer extends AggregateRoot {
 
   private final String cpf;
 
-  private final String name;
+  private final Name name;
 
-  public Customer(final String id, final String cpf, final String name) {
+  public Customer(final String id, final String cpf, final Name name) {
     this.id = id;
     this.cpf = cpf;
     this.name = name;
@@ -24,12 +27,7 @@ public class Customer extends AggregateRoot {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("Customer{");
-    sb.append("id='").append(this.id).append('\'');
-    sb.append(", cpf='").append(this.cpf).append('\'');
-    sb.append(", name='").append(this.name).append('\'');
-    sb.append('}');
-    return sb.toString();
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
 }
