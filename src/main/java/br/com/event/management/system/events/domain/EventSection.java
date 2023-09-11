@@ -66,21 +66,6 @@ public class EventSection extends Entity<EventSectionId> {
     return section;
   }
 
-  public static EventSection create(final AddEventSectionCommand command) {
-    final var section = new EventSection(
-      EventSectionId.newInstance(),
-      command.name(),
-      Optional.ofNullable(command.description()),
-      command.price(),
-      false,
-      command.totalSpots(),
-      0L,
-      new HashSet<>()
-    );
-    section.initializeSpots();
-    return section;
-  }
-
   public Set<EventSpot> getSpots() {
     return Collections.unmodifiableSet(this.spots);
   }

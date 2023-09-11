@@ -27,7 +27,7 @@ class EventTest {
       PartnerId.newInstance()
     ));
 
-    event.addSection(new AddEventSectionCommand(
+    event.addSection(new CreateEventSectionCommand(
       "Event 1 Section 1",
       null,
       TOTAL_SPOTS,

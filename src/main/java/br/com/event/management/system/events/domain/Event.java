@@ -69,7 +69,7 @@ public class Event extends AggregateRoot<EventId> {
     );
   }
 
-  public void addSection(final AddEventSectionCommand command) {
+  public void addSection(final CreateEventSectionCommand command) {
     final var section = EventSection.create(command);
     this.sections.add(section);
     this.totalSpots += section.getTotalSpots();
