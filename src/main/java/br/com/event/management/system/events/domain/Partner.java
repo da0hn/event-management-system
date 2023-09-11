@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @Getter
 public class Partner extends AggregateRoot<PartnerId> {
 
-  private final String name;
+  private String name;
 
   public Partner(final PartnerId id, final String name) {
     super(id);
@@ -29,6 +29,10 @@ public class Partner extends AggregateRoot<PartnerId> {
         this.getId()
       )
     );
+  }
+
+  public void changeName(final String name) {
+    this.name = name;
   }
 
   @Override

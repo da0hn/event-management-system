@@ -17,19 +17,19 @@ import java.util.stream.LongStream;
 @Getter
 public class EventSection extends Entity<EventSectionId> {
 
-  private final String name;
-
-  private final Optional<String> description;
-
-  private final BigDecimal price;
-
-  private final boolean published;
-
   private final Long totalSpots;
 
   private final Long totalSpotsReserved;
 
   private final Set<EventSpot> spots = new HashSet<>(0);
+
+  private boolean published;
+
+  private BigDecimal price;
+
+  private String name;
+
+  private Optional<String> description;
 
   public EventSection(
     final EventSectionId id,
@@ -64,6 +64,31 @@ public class EventSection extends Entity<EventSectionId> {
     );
     section.initializeSpots();
     return section;
+  }
+
+  public void changeName(final String name) {
+    this.name = name;
+  }
+
+  public void changeDescription(final String description) {
+    this.description = Optional.ofNullable(description);
+  }
+
+  public void changePrice(final BigDecimal price) {
+    this.price = price;
+  }
+
+  public void publish() {
+    this.published = true;
+  }
+
+  public void unPublish() {
+    this.published = false;
+  }
+
+  public void publishAll() {
+    this.publish();
+    this.spots.forEach(EventSpot::publish);
   }
 
   public Set<EventSpot> getSpots() {

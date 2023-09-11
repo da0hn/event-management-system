@@ -54,4 +54,38 @@ class EventTest {
     Assertions.assertThat(section.getSpots()).isUnmodifiable();
   }
 
+  @Test
+  @DisplayName("Should publish all spots of event")
+  void test3() {
+    final var event = Event.create(new CreateEventCommand(
+      "Event 1",
+      null,
+      LocalDate.now(),
+      PartnerId.newInstance()
+    ));
+
+    event.addSection(new CreateEventSectionCommand(
+      "Section 1",
+      null,
+      100L,
+      BigDecimal.valueOf(1000)
+    ));
+
+    event.addSection(new CreateEventSectionCommand(
+      "Section 2",
+      null,
+      1000L,
+      BigDecimal.valueOf(50)
+    ));
+
+    event.publishAll();
+
+    Assertions.assertThat(event.isPublished()).isTrue();
+    Assertions.assertThat(event.getSections()).allMatch(EventSection::isPublished);
+    Assertions.assertThat(event.getSections().stream())
+      .flatMap(EventSection::getSpots)
+      .allMatch(EventSpot::isPublished);
+
+  }
+
 }

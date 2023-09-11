@@ -2,18 +2,20 @@ package br.com.event.management.system.events.domain;
 
 import br.com.event.management.system.common.domain.Entity;
 import br.com.event.management.system.common.domain.valueobjects.EventSpotId;
+import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Optional;
 
+@Getter
 public class EventSpot extends Entity<EventSpotId> {
-
-  private final Optional<String> location;
 
   private final boolean reserved;
 
-  private final boolean published;
+  private boolean published;
+
+  private Optional<String> location;
 
   public EventSpot(final EventSpotId id, final Optional<String> location, final boolean reserved, final boolean published) {
     super(id);
@@ -29,6 +31,18 @@ public class EventSpot extends Entity<EventSpotId> {
       false,
       false
     );
+  }
+
+  public void changeLocation(final String location) {
+    this.location = Optional.ofNullable(location);
+  }
+
+  public void publish() {
+    this.published = true;
+  }
+
+  public void unPublish() {
+    this.published = false;
   }
 
   @Override

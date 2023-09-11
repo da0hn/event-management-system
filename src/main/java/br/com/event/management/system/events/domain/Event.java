@@ -17,19 +17,19 @@ import java.util.Set;
 @Getter
 public class Event extends AggregateRoot<EventId> {
 
-  private final String name;
-
-  private final Optional<String> description;
-
-  private final LocalDate date;
-
-  private final boolean published;
-
   private final Long totalSpotsReserved;
 
   private final PartnerId partnerId;
 
   private final Set<EventSection> sections = new HashSet<>(0);
+
+  private boolean published;
+
+  private String name;
+
+  private Optional<String> description;
+
+  private LocalDate date;
 
   private Long totalSpots;
 
@@ -73,6 +73,31 @@ public class Event extends AggregateRoot<EventId> {
     final var section = EventSection.create(command);
     this.sections.add(section);
     this.totalSpots += section.getTotalSpots();
+  }
+
+  public void changeName(final String name) {
+    this.name = name;
+  }
+
+  public void changeDescription(final String description) {
+    this.description = Optional.ofNullable(description);
+  }
+
+  public void changeDate(final LocalDate date) {
+    this.date = date;
+  }
+
+  public void publishAll() {
+    this.publish();
+    this.sections.forEach(EventSection::publishAll);
+  }
+
+  public void publish() {
+    this.published = true;
+  }
+
+  public void unPublish() {
+    this.published = false;
   }
 
   public Set<EventSection> getSections() {
