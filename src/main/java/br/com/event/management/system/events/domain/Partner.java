@@ -20,6 +20,17 @@ public class Partner extends AggregateRoot<PartnerId> {
     return new Partner(PartnerId.newInstance(), command.name());
   }
 
+  public Event initializeEvent(final InitializeEventCommand command) {
+    return Event.create(
+      new CreateEventCommand(
+        command.name(),
+        command.description(),
+        command.date(),
+        this.getId()
+      )
+    );
+  }
+
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE, false, AggregateRoot.class);
