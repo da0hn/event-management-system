@@ -1,1 +1,18 @@
+version: '3.7'
 services:
+  event-management-system-database:
+    image: mysql:8.0.34-debian
+    container_name: event-management-system-database
+    ports:
+      - "3300:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=events
+    networks:
+      - event-management-system-network
+
+
+networks:
+  event-management-system-network:
+    name: event-management-system-network
+    driver: bridge
