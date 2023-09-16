@@ -1,4 +1,4 @@
-package br.com.event.management.system.events.infrastructure.database;
+package br.com.event.management.system.events.infrastructure.database.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,8 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
@@ -19,7 +21,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "partner")
-public class PartnerModel {
+public class PartnerModel implements Serializable {
+
+  @Serial
+  private static final long serialVersionUID = 5079629680000696006L;
 
   @Id
   @Column(nullable = false, length = 36)
