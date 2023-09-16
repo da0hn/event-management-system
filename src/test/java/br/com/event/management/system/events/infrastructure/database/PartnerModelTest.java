@@ -2,8 +2,10 @@ package br.com.event.management.system.events.infrastructure.database;
 
 import br.com.event.management.system.events.domain.CreatePartnerCommand;
 import br.com.event.management.system.events.domain.Partner;
-import br.com.event.management.system.events.infrastructure.database.repository.PartnerModelRepository;
+import br.com.event.management.system.events.infrastructure.database.model.PartnerModel;
+import br.com.event.management.system.events.infrastructure.database.repositories.PartnerModelJpaRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.Optional;
-
 @DataJpaTest
 @Testcontainers
 @ActiveProfiles("test-containers")
@@ -21,7 +21,12 @@ import java.util.Optional;
 class PartnerModelTest {
 
   @Autowired
-  private PartnerModelRepository partnerModelRepository;
+  private PartnerModelJpaRepository partnerModelRepository;
+
+  @BeforeEach
+  void setUp() {
+    this.partnerModelRepository.deleteAll();
+  }
 
   @Test
   @DisplayName("Should save a partner")
