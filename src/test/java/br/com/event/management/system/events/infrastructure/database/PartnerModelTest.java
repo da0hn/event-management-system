@@ -1,7 +1,7 @@
 package br.com.event.management.system.events.infrastructure.database;
 
-import br.com.event.management.system.events.domain.CreatePartnerCommand;
-import br.com.event.management.system.events.domain.Partner;
+import br.com.event.management.system.events.domain.commands.CreatePartnerCommand;
+import br.com.event.management.system.events.domain.entities.Partner;
 import br.com.event.management.system.events.infrastructure.database.model.PartnerModel;
 import br.com.event.management.system.events.infrastructure.database.repositories.PartnerModelJpaRepository;
 import org.assertj.core.api.Assertions;

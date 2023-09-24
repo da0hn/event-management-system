@@ -1,4 +1,4 @@
-package br.com.event.management.system.events.domain;
+package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.Entity;
 import br.com.event.management.system.common.domain.valueobjects.EventSpotId;

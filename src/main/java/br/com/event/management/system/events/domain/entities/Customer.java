@@ -1,8 +1,9 @@
-package br.com.event.management.system.events.domain;
+package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.AggregateRoot;
 import br.com.event.management.system.common.domain.valueobjects.Cpf;
 import br.com.event.management.system.common.domain.valueobjects.CustomerId;
+import br.com.event.management.system.events.domain.commands.CreateCustomerCommand;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

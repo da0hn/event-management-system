@@ -1,10 +1,10 @@
 package br.com.event.management.system.events.infrastructure.database;
 
-import br.com.event.management.system.events.domain.CreateEventSectionCommand;
-import br.com.event.management.system.events.domain.CreatePartnerCommand;
-import br.com.event.management.system.events.domain.EventSection;
-import br.com.event.management.system.events.domain.InitializeEventCommand;
-import br.com.event.management.system.events.domain.Partner;
+import br.com.event.management.system.events.domain.commands.CreateEventSectionCommand;
+import br.com.event.management.system.events.domain.commands.CreatePartnerCommand;
+import br.com.event.management.system.events.domain.entities.EventSection;
+import br.com.event.management.system.events.domain.commands.InitializeEventCommand;
+import br.com.event.management.system.events.domain.entities.Partner;
 import br.com.event.management.system.events.infrastructure.database.repositories.impl.EventMysqlRepository;
 import br.com.event.management.system.events.infrastructure.database.repositories.impl.PartnerMysqlRepository;
 import org.assertj.core.api.Assertions;

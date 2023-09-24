@@ -1,6 +1,6 @@
 package br.com.event.management.system.events.infrastructure.database.mappers;
 
-import br.com.event.management.system.events.domain.Event;
+import br.com.event.management.system.events.domain.entities.Event;
 import br.com.event.management.system.events.infrastructure.database.model.EventModel;
 import br.com.event.management.system.events.infrastructure.database.repositories.PartnerModelJpaRepository;
 import org.mapstruct.AfterMapping;

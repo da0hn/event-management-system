@@ -1,7 +1,7 @@
 package br.com.event.management.system.events.infrastructure.database;
 
-import br.com.event.management.system.events.domain.CreateCustomerCommand;
-import br.com.event.management.system.events.domain.Customer;
+import br.com.event.management.system.events.domain.commands.CreateCustomerCommand;
+import br.com.event.management.system.events.domain.entities.Customer;
 import br.com.event.management.system.events.infrastructure.database.repositories.impl.CustomerMysqlRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers

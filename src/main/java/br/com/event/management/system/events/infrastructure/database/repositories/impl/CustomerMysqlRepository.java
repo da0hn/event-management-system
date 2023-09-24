@@ -2,7 +2,7 @@ package br.com.event.management.system.events.infrastructure.database.repositori
 
 import br.com.event.management.system.common.domain.EntityId;
 import br.com.event.management.system.common.domain.IRepository;
-import br.com.event.management.system.events.domain.Customer;
+import br.com.event.management.system.events.domain.entities.Customer;
 import br.com.event.management.system.events.infrastructure.database.mappers.CustomerModelMapper;
 import br.com.event.management.system.events.infrastructure.database.repositories.CustomerModelJpaRepository;
 import lombok.AllArgsConstructor;

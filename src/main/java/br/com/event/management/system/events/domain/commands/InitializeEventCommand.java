@@ -1,4 +1,4 @@
-package br.com.event.management.system.events.domain;
+package br.com.event.management.system.events.domain.commands;
 
 import java.time.LocalDate;
 

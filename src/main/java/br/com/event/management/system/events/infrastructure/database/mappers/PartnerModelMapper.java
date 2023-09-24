@@ -1,6 +1,6 @@
 package br.com.event.management.system.events.infrastructure.database.mappers;
 
-import br.com.event.management.system.events.domain.Partner;
+import br.com.event.management.system.events.domain.entities.Partner;
 import br.com.event.management.system.events.infrastructure.database.model.PartnerModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

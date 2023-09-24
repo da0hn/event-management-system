@@ -1,7 +1,9 @@
-package br.com.event.management.system.events.domain;
+package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.valueobjects.Cpf;
 import br.com.event.management.system.common.domain.valueobjects.CustomerId;
+import br.com.event.management.system.events.domain.commands.CreateCustomerCommand;
+import br.com.event.management.system.events.domain.entities.Customer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

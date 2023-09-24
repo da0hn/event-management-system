@@ -1,6 +1,6 @@
 package br.com.event.management.system.events.infrastructure.database.mappers;
 
-import br.com.event.management.system.events.domain.Customer;
+import br.com.event.management.system.events.domain.entities.Customer;
 import br.com.event.management.system.events.infrastructure.database.model.CustomerModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

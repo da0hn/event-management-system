@@ -1,6 +1,6 @@
 package br.com.event.management.system.events.infrastructure.database.mappers;
 
-import br.com.event.management.system.events.domain.EventSection;
+import br.com.event.management.system.events.domain.entities.EventSection;
 import br.com.event.management.system.events.infrastructure.database.model.EventSectionModel;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.InjectionStrategy;

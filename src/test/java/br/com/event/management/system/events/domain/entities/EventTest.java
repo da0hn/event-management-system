@@ -1,6 +1,11 @@
-package br.com.event.management.system.events.domain;
+package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.valueobjects.PartnerId;
+import br.com.event.management.system.events.domain.commands.CreateEventCommand;
+import br.com.event.management.system.events.domain.commands.CreateEventSectionCommand;
+import br.com.event.management.system.events.domain.entities.Event;
+import br.com.event.management.system.events.domain.entities.EventSection;
+import br.com.event.management.system.events.domain.entities.EventSpot;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
