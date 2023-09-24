@@ -1,4 +1,4 @@
-package br.com.event.management.system.events.infrastructure.database;
+package br.com.event.management.system.events.infrastructure.database.repositories.impl;
 
 import br.com.event.management.system.events.domain.commands.CreateCustomerCommand;
 import br.com.event.management.system.events.domain.entities.Customer;
