@@ -1,8 +1,8 @@
 package br.com.event.management.system.events.infrastructure.database.repositories.impl;
 
 import br.com.event.management.system.common.domain.EntityId;
-import br.com.event.management.system.common.domain.IRepository;
 import br.com.event.management.system.events.domain.entities.Customer;
+import br.com.event.management.system.events.domain.repositories.CustomerRepository;
 import br.com.event.management.system.events.infrastructure.database.mappers.CustomerModelMapper;
 import br.com.event.management.system.events.infrastructure.database.repositories.CustomerModelJpaRepository;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Component
 @AllArgsConstructor
-public class CustomerMysqlRepository implements IRepository<Customer> {
+public class CustomerMysqlRepository implements CustomerRepository {
 
   private final CustomerModelJpaRepository customerModelJpaRepository;
 

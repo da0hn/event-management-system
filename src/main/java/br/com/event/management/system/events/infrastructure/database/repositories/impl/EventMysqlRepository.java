@@ -3,6 +3,7 @@ package br.com.event.management.system.events.infrastructure.database.repositori
 import br.com.event.management.system.common.domain.EntityId;
 import br.com.event.management.system.common.domain.IRepository;
 import br.com.event.management.system.events.domain.entities.Event;
+import br.com.event.management.system.events.domain.repositories.EventRepository;
 import br.com.event.management.system.events.infrastructure.database.mappers.EventModelMapper;
 import br.com.event.management.system.events.infrastructure.database.repositories.EventModelJpaRepository;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class EventMysqlRepository implements IRepository<Event> {
+public class EventMysqlRepository implements EventRepository {
 
   private final EventModelJpaRepository eventModelJpaRepository;
 
