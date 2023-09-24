@@ -12,7 +12,7 @@ public class Customer extends AggregateRoot<CustomerId> {
 
   private final Cpf cpf;
 
-  private final String name;
+  private String name;
 
   public Customer(final CustomerId id, final Cpf cpf, final String name) {
     super(id);
@@ -27,6 +27,10 @@ public class Customer extends AggregateRoot<CustomerId> {
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE, false, AggregateRoot.class);
+  }
+
+  public void changeName(final String name) {
+    this.name = name;
   }
 
 }

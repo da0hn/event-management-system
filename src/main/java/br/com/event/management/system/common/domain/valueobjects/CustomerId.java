@@ -1,6 +1,5 @@
 package br.com.event.management.system.common.domain.valueobjects;
 
-import br.com.event.management.system.common.domain.Entity;
 import br.com.event.management.system.common.domain.EntityId;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -25,4 +24,5 @@ public record CustomerId(UUID value) implements EntityId<UUID> {
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
+
 }

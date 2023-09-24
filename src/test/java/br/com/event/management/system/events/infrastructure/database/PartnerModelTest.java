@@ -38,8 +38,6 @@ class PartnerModelTest {
 
     this.partnerModelRepository.save(partnerModel);
 
-    System.out.println(partnerModel);
-
     final var maybePartnerModel = this.partnerModelRepository.findById(partner.getId().value());
 
     Assertions.assertThat(maybePartnerModel).isPresent();
