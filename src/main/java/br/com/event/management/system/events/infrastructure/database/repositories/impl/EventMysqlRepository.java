@@ -1,7 +1,7 @@
 package br.com.event.management.system.events.infrastructure.database.repositories.impl;
 
 import br.com.event.management.system.common.domain.EntityId;
-import br.com.event.management.system.common.domain.IRepository;
+import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.events.domain.entities.Event;
 import br.com.event.management.system.events.domain.repositories.EventRepository;
 import br.com.event.management.system.events.infrastructure.database.mappers.EventModelMapper;
@@ -32,6 +32,12 @@ public class EventMysqlRepository implements EventRepository {
   public Optional<Event> findById(final EntityId<UUID> id) {
     return this.eventModelJpaRepository.findById(id.value())
       .map(this.eventModelMapper::toDomain);
+  }
+
+  @Override
+  public Event findByIdOrElseThrow(final EntityId<UUID> id) throws DomainEntityNotFoundException {
+    return this.findById(id)
+      .orElseThrow(() -> new DomainEntityNotFoundException("Event not found"));
   }
 
   @Override

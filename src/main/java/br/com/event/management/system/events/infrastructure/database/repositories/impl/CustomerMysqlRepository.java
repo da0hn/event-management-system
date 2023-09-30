@@ -1,6 +1,7 @@
 package br.com.event.management.system.events.infrastructure.database.repositories.impl;
 
 import br.com.event.management.system.common.domain.EntityId;
+import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.events.domain.entities.Customer;
 import br.com.event.management.system.events.domain.repositories.CustomerRepository;
 import br.com.event.management.system.events.infrastructure.database.mappers.CustomerModelMapper;
@@ -29,6 +30,12 @@ public class CustomerMysqlRepository implements CustomerRepository {
   public Optional<Customer> findById(final EntityId<UUID> id) {
     return this.customerModelJpaRepository.findById(id.value())
       .map(this.customerModelMapper::toDomain);
+  }
+
+  @Override
+  public Customer findByIdOrElseThrow(final EntityId<UUID> id) throws DomainEntityNotFoundException {
+    return this.findById(id)
+      .orElseThrow(() -> new DomainEntityNotFoundException("Customer not found"));
   }
 
   @Override

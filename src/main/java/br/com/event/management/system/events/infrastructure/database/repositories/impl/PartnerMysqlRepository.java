@@ -1,7 +1,7 @@
 package br.com.event.management.system.events.infrastructure.database.repositories.impl;
 
 import br.com.event.management.system.common.domain.EntityId;
-import br.com.event.management.system.common.domain.IRepository;
+import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.events.domain.entities.Partner;
 import br.com.event.management.system.events.domain.repositories.PartnerRepository;
 import br.com.event.management.system.events.infrastructure.database.mappers.PartnerModelMapper;
@@ -30,6 +30,12 @@ public class PartnerMysqlRepository implements PartnerRepository {
   public Optional<Partner> findById(final EntityId<UUID> entityId) {
     return this.partnerModelJpaRepository.findById(entityId.value())
       .map(this.partnerModelMapper::toDomain);
+  }
+
+  @Override
+  public Partner findByIdOrElseThrow(final EntityId<UUID> id) throws DomainEntityNotFoundException {
+    return this.findById(id)
+      .orElseThrow(() -> new DomainEntityNotFoundException("Partner not found"));
   }
 
   @Override
