@@ -6,6 +6,7 @@ import br.com.event.management.system.events.application.dto.UpdateCustomerInput
 import br.com.event.management.system.events.domain.entities.Customer;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CustomerService {
 
@@ -13,6 +14,6 @@ public interface CustomerService {
 
   Customer register(RegisterCustomerInput input);
 
-  Customer update(CustomerId id, UpdateCustomerInput input);
+  Customer update(UUID customerId, UpdateCustomerInput input);
 
 }

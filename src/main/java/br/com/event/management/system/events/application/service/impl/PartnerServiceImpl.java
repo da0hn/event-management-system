@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @AllArgsConstructor
@@ -37,16 +38,20 @@ public class PartnerServiceImpl implements PartnerService {
   }
 
   @Override
-  public Partner update(final PartnerId id, final UpdatePartnerInput input) {
+  public Partner update(final UUID partnerId, final UpdatePartnerInput input) {
     return this.unitOfWork.execute((transaction) -> {
-      final var partner = this.partnerRepository.findById(id)
-        .orElseThrow(() -> new DomainEntityNotFoundException("Partner not found"));
+      final var partner = this.findPartnerOrElseThrow(partnerId);
 
       partner.changeName(input.name());
 
       this.partnerRepository.add(partner);
       return partner;
     });
+  }
+
+  private Partner findPartnerOrElseThrow(final UUID id) {
+    return this.partnerRepository.findById(PartnerId.of(id))
+      .orElseThrow(() -> new DomainEntityNotFoundException("Partner not found"));
   }
 
 }

@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @AllArgsConstructor
@@ -37,16 +38,20 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public Customer update(final CustomerId id, final UpdateCustomerInput input) {
+  public Customer update(final UUID customerId, final UpdateCustomerInput input) {
     return this.unitOfWork.execute((transaction) -> {
-      final var customer = this.customerRepository.findById(id)
-        .orElseThrow(() -> new DomainEntityNotFoundException("Customer not found"));
+      final var customer = this.findCustomerOrElseThrow(customerId);
 
       customer.changeName(input.name());
 
       this.customerRepository.add(customer);
       return customer;
     });
+  }
+
+  private Customer findCustomerOrElseThrow(final UUID customerId) {
+    return this.customerRepository.findById(CustomerId.of(customerId))
+      .orElseThrow(() -> new DomainEntityNotFoundException("Customer not found"));
   }
 
 }
