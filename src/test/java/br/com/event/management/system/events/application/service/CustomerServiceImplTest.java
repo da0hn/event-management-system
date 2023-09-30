@@ -46,6 +46,9 @@ class CustomerServiceImplTest {
     Assertions.assertThat(customer.getCpf()).isNotNull();
     Assertions.assertThat(customer.getCpf().value()).isEqualTo("02281761070");
 
+    final var list = this.sut.list();
+
+    Assertions.assertThat(list).hasSize(1);
   }
 
 }
