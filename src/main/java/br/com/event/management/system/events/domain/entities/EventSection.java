@@ -1,8 +1,10 @@
 package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.Entity;
+import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.common.domain.valueobjects.EventSectionId;
 import br.com.event.management.system.events.domain.commands.CreateEventSectionCommand;
+import br.com.event.management.system.events.domain.commands.UpdateSpotLocationCommand;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -94,6 +96,14 @@ public class EventSection extends Entity<EventSectionId> {
 
   public Set<EventSpot> getSpots() {
     return Collections.unmodifiableSet(this.spots);
+  }
+
+  public void changeLocation(final UpdateSpotLocationCommand command) {
+    final var spot = this.spots.stream()
+      .filter(item -> item.getId().equals(command.spotId()))
+      .findFirst()
+      .orElseThrow(() -> new DomainEntityNotFoundException("Spot not found"));
+    spot.changeLocation(command.location());
   }
 
   @Override

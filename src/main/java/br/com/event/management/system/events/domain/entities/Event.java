@@ -1,10 +1,13 @@
 package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.AggregateRoot;
+import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.common.domain.valueobjects.EventId;
 import br.com.event.management.system.common.domain.valueobjects.PartnerId;
 import br.com.event.management.system.events.domain.commands.CreateEventCommand;
 import br.com.event.management.system.events.domain.commands.CreateEventSectionCommand;
+import br.com.event.management.system.events.domain.commands.UpdateSectionInformationCommand;
+import br.com.event.management.system.events.domain.commands.UpdateSpotLocationCommand;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -104,6 +107,26 @@ public class Event extends AggregateRoot<EventId> {
 
   public Set<EventSection> getSections() {
     return Collections.unmodifiableSet(this.sections);
+  }
+
+  public void changeSectionInformation(final UpdateSectionInformationCommand updateSectionInformationCommand) {
+
+    final var section = this.sections.stream()
+      .filter(item -> item.getId().equals(updateSectionInformationCommand.sectionId()))
+      .findFirst()
+      .orElseThrow(() -> new DomainEntityNotFoundException("Section not found"));
+
+    section.changeName(updateSectionInformationCommand.name());
+    section.changeDescription(updateSectionInformationCommand.description());
+  }
+
+  public void changeLocation(final UpdateSpotLocationCommand command) {
+    final var section = this.sections.stream()
+      .filter(item -> item.getId().equals(command.sectionId()))
+      .findFirst()
+      .orElseThrow(() -> new DomainEntityNotFoundException("Section not found"));
+
+    section.changeLocation(command);
   }
 
   @Override
