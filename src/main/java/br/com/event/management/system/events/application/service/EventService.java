@@ -4,7 +4,7 @@ import br.com.event.management.system.events.application.dto.CreateEventInput;
 import br.com.event.management.system.events.application.dto.UpdateEventInput;
 import br.com.event.management.system.events.application.dto.UpdateSpotLocationInput;
 import br.com.event.management.system.events.application.dto.AddSectionInput;
-import br.com.event.management.system.events.application.service.impl.UpdateSectionInput;
+import br.com.event.management.system.events.application.dto.UpdateSectionInput;
 import br.com.event.management.system.events.domain.entities.Event;
 import br.com.event.management.system.events.domain.entities.EventSection;
 import br.com.event.management.system.events.domain.entities.EventSpot;

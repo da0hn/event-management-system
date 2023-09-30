@@ -9,6 +9,7 @@ import br.com.event.management.system.common.domain.valueobjects.PartnerId;
 import br.com.event.management.system.events.application.dto.AddSectionInput;
 import br.com.event.management.system.events.application.dto.CreateEventInput;
 import br.com.event.management.system.events.application.dto.UpdateEventInput;
+import br.com.event.management.system.events.application.dto.UpdateSectionInput;
 import br.com.event.management.system.events.application.dto.UpdateSpotLocationInput;
 import br.com.event.management.system.events.application.service.EventService;
 import br.com.event.management.system.events.domain.commands.CreateEventSectionCommand;
