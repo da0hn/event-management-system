@@ -1,6 +1,7 @@
-package br.com.event.management.system.events.application.service;
+package br.com.event.management.system.events.application.service.impl;
 
 import br.com.event.management.system.events.application.dto.RegisterCustomerInput;
+import br.com.event.management.system.events.application.service.CustomerService;
 import br.com.event.management.system.events.domain.commands.CreateCustomerCommand;
 import br.com.event.management.system.events.domain.entities.Customer;
 import br.com.event.management.system.events.domain.repositories.CustomerRepository;

@@ -2,7 +2,7 @@ package br.com.event.management.system.common.domain.exception;
 
 import java.io.Serial;
 
-public class InvalidCpfException extends RuntimeException {
+public class InvalidCpfException extends DomainException {
 
   @Serial
   private static final long serialVersionUID = 12431156040533151L;
