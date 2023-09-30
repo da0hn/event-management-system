@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface EventSpotModelRepository extends JpaRepository<EventSpotModel, UUID> {
+public interface EventSpotModelJpaRepository extends JpaRepository<EventSpotModel, UUID> {
 }
