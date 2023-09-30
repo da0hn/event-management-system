@@ -32,7 +32,7 @@ class CustomerServiceImplTest {
     this.customerRepository.add(Customer.create(new CreateCustomerCommand("Customer 2", "57855910069")));
     this.customerRepository.add(Customer.create(new CreateCustomerCommand("Customer 3", "53643102054")));
 
-    final var response = this.sut.list();
+    final var response = this.sut.findAll();
 
     Assertions.assertThat(response).hasSize(3);
   }
@@ -47,7 +47,7 @@ class CustomerServiceImplTest {
     Assertions.assertThat(customer.getCpf()).isNotNull();
     Assertions.assertThat(customer.getCpf().value()).isEqualTo("02281761070");
 
-    final var list = this.sut.list();
+    final var list = this.sut.findAll();
 
     Assertions.assertThat(list).hasSize(1);
   }

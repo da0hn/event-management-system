@@ -24,7 +24,7 @@ public class PartnerServiceImpl implements PartnerService {
   private final UnitOfWork unitOfWork;
 
   @Override
-  public List<Partner> list() {
+  public List<Partner> findAll() {
     return this.partnerRepository.findAll();
   }
 

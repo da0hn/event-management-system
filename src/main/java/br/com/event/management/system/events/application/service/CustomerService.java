@@ -1,6 +1,5 @@
 package br.com.event.management.system.events.application.service;
 
-import br.com.event.management.system.common.domain.valueobjects.CustomerId;
 import br.com.event.management.system.events.application.dto.RegisterCustomerInput;
 import br.com.event.management.system.events.application.dto.UpdateCustomerInput;
 import br.com.event.management.system.events.domain.entities.Customer;
@@ -10,7 +9,7 @@ import java.util.UUID;
 
 public interface CustomerService {
 
-  List<Customer> list();
+  List<Customer> findAll();
 
   Customer register(RegisterCustomerInput input);
 

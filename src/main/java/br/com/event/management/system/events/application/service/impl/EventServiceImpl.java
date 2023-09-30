@@ -38,7 +38,7 @@ public class EventServiceImpl implements EventService {
   private final UnitOfWork unitOfWork;
 
   @Override
-  public List<Event> list() {
+  public List<Event> findAll() {
     return this.eventRepository.findAll();
   }
 

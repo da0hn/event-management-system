@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
   private final UnitOfWork unitOfWork;
 
   @Override
-  public List<Customer> list() {
+  public List<Customer> findAll() {
     return this.customerRepository.findAll();
   }
 

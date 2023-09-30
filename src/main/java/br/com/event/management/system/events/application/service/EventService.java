@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public interface EventService {
 
-  List<Event> list();
+  List<Event> findAll();
 
   Event create(CreateEventInput input);
 

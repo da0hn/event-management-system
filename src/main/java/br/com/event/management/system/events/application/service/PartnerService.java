@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface PartnerService {
 
-  List<Partner> list();
+  List<Partner> findAll();
 
   Partner register(RegisterPartnerInput input);
 
