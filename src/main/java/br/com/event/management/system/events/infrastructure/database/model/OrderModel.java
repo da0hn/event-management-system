@@ -24,14 +24,14 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order")
+@Table(name = "`order`")
 public class OrderModel implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 327973303217824989L;
 
   @Id
-  @Column(name = "id")
+  @Column(length = 36)
   private UUID id;
 
   @ManyToOne
