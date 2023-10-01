@@ -36,7 +36,7 @@ public class Order extends AggregateRoot<OrderId> {
     this.status = status;
   }
 
-  public static Order newInstance(
+  public static Order create(
     final CustomerId customerId,
     final BigDecimal amount,
     final EventSpotId spotId

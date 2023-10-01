@@ -3,6 +3,8 @@ package br.com.event.management.system.events.domain.entities;
 import br.com.event.management.system.common.domain.AggregateRoot;
 import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.common.domain.valueobjects.EventId;
+import br.com.event.management.system.common.domain.valueobjects.EventSectionId;
+import br.com.event.management.system.common.domain.valueobjects.EventSpotId;
 import br.com.event.management.system.common.domain.valueobjects.PartnerId;
 import br.com.event.management.system.events.domain.commands.CreateEventCommand;
 import br.com.event.management.system.events.domain.commands.CreateEventSectionCommand;
@@ -18,6 +20,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 @Getter
 public class Event extends AggregateRoot<EventId> {
@@ -111,13 +114,25 @@ public class Event extends AggregateRoot<EventId> {
 
   public void changeSectionInformation(final UpdateSectionInformationCommand updateSectionInformationCommand) {
 
-    final var section = this.sections.stream()
-      .filter(item -> item.getId().equals(updateSectionInformationCommand.sectionId()))
-      .findFirst()
-      .orElseThrow(() -> new DomainEntityNotFoundException("Section not found"));
+    final var section = this.searchSectionOrElseThrow(item -> item.getId().equals(updateSectionInformationCommand.sectionId()));
 
     section.changeName(updateSectionInformationCommand.name());
     section.changeDescription(updateSectionInformationCommand.description());
+  }
+
+  public EventSection searchSectionOrElseThrow(final Predicate<? super EventSection> criteria) {
+    return this.sections.stream()
+      .filter(criteria)
+      .findFirst()
+      .orElseThrow(() -> new DomainEntityNotFoundException("Section not found"));
+  }
+
+  public boolean allowReserveSpot(final EventSectionId eventSectionId, final EventSpotId eventSpotId) {
+    if (!this.published) return false;
+
+    final var section = this.searchSectionOrElseThrow(item -> item.getId().equals(eventSectionId));
+
+    return section.allowReserveSpot(eventSpotId);
   }
 
   public void changeLocation(final UpdateSpotLocationCommand command) {
@@ -127,6 +142,11 @@ public class Event extends AggregateRoot<EventId> {
       .orElseThrow(() -> new DomainEntityNotFoundException("Section not found"));
 
     section.changeLocation(command);
+  }
+
+  public void markSpotAsReserved(final EventSectionId eventSectionId, final EventSpotId eventSpotId) {
+    final var section = this.searchSectionOrElseThrow(item -> item.getId().equals(eventSectionId));
+    section.markSpotAsReserved(eventSpotId);
   }
 
   @Override

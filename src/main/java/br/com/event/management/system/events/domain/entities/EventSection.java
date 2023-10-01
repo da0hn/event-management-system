@@ -1,8 +1,10 @@
 package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.Entity;
+import br.com.event.management.system.common.domain.exception.DomainBusinessException;
 import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.common.domain.valueobjects.EventSectionId;
+import br.com.event.management.system.common.domain.valueobjects.EventSpotId;
 import br.com.event.management.system.events.domain.commands.CreateEventSectionCommand;
 import br.com.event.management.system.events.domain.commands.UpdateSpotLocationCommand;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -99,16 +102,37 @@ public class EventSection extends Entity<EventSectionId> {
   }
 
   public void changeLocation(final UpdateSpotLocationCommand command) {
-    final var spot = this.spots.stream()
-      .filter(item -> item.getId().equals(command.spotId()))
+    final var spot = this.searchSpotOrElseThrow(item -> item.getId().equals(command.spotId()));
+    spot.changeLocation(command.location());
+  }
+
+  public EventSpot searchSpotOrElseThrow(final Predicate<? super EventSpot> criteria) {
+    return this.spots.stream()
+      .filter(criteria)
       .findFirst()
       .orElseThrow(() -> new DomainEntityNotFoundException("Spot not found"));
-    spot.changeLocation(command.location());
   }
 
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE, false, Entity.class);
+  }
+
+  public boolean allowReserveSpot(final EventSpotId eventSpotId) {
+    if (!this.published) return false;
+
+    final var spot = this.searchSpotOrElseThrow(item -> item.getId().equals(eventSpotId));
+
+    if (!spot.isReserved()) return false;
+    return spot.isPublished();
+  }
+
+  public void markSpotAsReserved(final EventSpotId eventSpotId) {
+    final var spot = this.searchSpotOrElseThrow(item -> item.getId().equals(eventSpotId));
+    if (spot.isReserved()) {
+      throw new DomainBusinessException("Spot already reserved");
+    }
+    spot.markAsReserved();
   }
 
   private void initializeSpots() {

@@ -11,7 +11,7 @@ import java.util.Optional;
 @Getter
 public class EventSpot extends Entity<EventSpotId> {
 
-  private final boolean reserved;
+  private boolean reserved;
 
   private boolean published;
 
@@ -43,6 +43,10 @@ public class EventSpot extends Entity<EventSpotId> {
 
   public void unPublish() {
     this.published = false;
+  }
+
+  public void markAsReserved() {
+    this.reserved = true;
   }
 
   @Override
