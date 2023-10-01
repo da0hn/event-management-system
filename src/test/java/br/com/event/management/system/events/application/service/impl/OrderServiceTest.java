@@ -11,6 +11,8 @@ import br.com.event.management.system.events.domain.entities.Partner;
 import br.com.event.management.system.events.domain.repositories.CustomerRepository;
 import br.com.event.management.system.events.domain.repositories.EventRepository;
 import br.com.event.management.system.events.domain.repositories.PartnerRepository;
+import br.com.event.management.system.events.domain.repositories.SpotReservationRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 @Testcontainers
 @ActiveProfiles("test-containers")
@@ -39,6 +43,10 @@ class OrderServiceTest {
 
   @Autowired
   private EventRepository eventRepository;
+
+  @Autowired
+  private SpotReservationRepository spotReservationRepository;
+
 
   @Test
   @DisplayName("Should create order")
@@ -60,12 +68,31 @@ class OrderServiceTest {
     final var section = new ArrayList<>(event.getSections()).get(0);
     final var eventSpot = new ArrayList<>(section.getSpots()).get(0);
 
-    final var order = this.orderService.create(new CreateOrderInput(
-      event.getId().value(),
-      section.getId().value(),
-      eventSpot.getId().value(),
-      customer.getId().value()
-    ));
+    final var asyncOrder1 = CompletableFuture.supplyAsync(
+      () -> this.orderService.create(new CreateOrderInput(
+        event.getId().value(),
+        section.getId().value(),
+        eventSpot.getId().value(),
+        customer.getId().value()
+      ))
+    );
+    final var asyncOrder2 = CompletableFuture.supplyAsync(
+      () -> this.orderService.create(new CreateOrderInput(
+        event.getId().value(),
+        section.getId().value(),
+        eventSpot.getId().value(),
+        customer.getId().value()
+      ))
+    );
+    final var asyncAll = CompletableFuture.allOf(asyncOrder1, asyncOrder2);
+
+    while (Future.State.RUNNING == asyncAll.state()) ;
+
+    final var orders = this.orderService.findAll();
+    final var reservedSpots = this.spotReservationRepository.findAll();
+
+    Assertions.assertThat(orders).hasSize(2);
+    Assertions.assertThat(reservedSpots).hasSize(1);
   }
 
 }

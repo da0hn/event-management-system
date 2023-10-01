@@ -1,6 +1,7 @@
 package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.AggregateRoot;
+import br.com.event.management.system.common.domain.Entity;
 import br.com.event.management.system.common.domain.exception.DomainEntityNotFoundException;
 import br.com.event.management.system.common.domain.valueobjects.EventId;
 import br.com.event.management.system.common.domain.valueobjects.EventSectionId;
@@ -151,7 +152,7 @@ public class Event extends AggregateRoot<EventId> {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE, false, AggregateRoot.class);
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE, false, Entity.class);
   }
 
 }

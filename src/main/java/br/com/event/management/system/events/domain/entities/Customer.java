@@ -1,6 +1,7 @@
 package br.com.event.management.system.events.domain.entities;
 
 import br.com.event.management.system.common.domain.AggregateRoot;
+import br.com.event.management.system.common.domain.Entity;
 import br.com.event.management.system.common.domain.valueobjects.Cpf;
 import br.com.event.management.system.common.domain.valueobjects.CustomerId;
 import br.com.event.management.system.events.domain.commands.CreateCustomerCommand;
@@ -27,7 +28,7 @@ public class Customer extends AggregateRoot<CustomerId> {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE, false, AggregateRoot.class);
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE, false, Entity.class);
   }
 
   public void changeName(final String name) {

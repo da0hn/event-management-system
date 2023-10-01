@@ -41,38 +41,50 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public Order create(final CreateOrderInput input) {
-    return this.unitOfWork.execute(transaction -> {
-      final var customer = this.customerRepository.findByIdOrElseThrow(CustomerId.of(input.customerId()));
+    final var customer = this.customerRepository.findByIdOrElseThrow(CustomerId.of(input.customerId()));
 
-      final var event = this.eventRepository.findByIdOrElseThrow(EventId.of(input.eventId()));
+    final var event = this.eventRepository.findByIdOrElseThrow(EventId.of(input.eventId()));
 
-      final var eventSectionId = EventSectionId.of(input.sectionId());
-      final var eventSpotId = EventSpotId.of(input.spotId());
+    final var eventSectionId = EventSectionId.of(input.sectionId());
+    final var eventSpotId = EventSpotId.of(input.spotId());
 
-      if (event.allowReserveSpot(eventSectionId, eventSpotId)) {
-        throw new DomainBusinessException("Spot not available");
+    if (event.allowReserveSpot(eventSectionId, eventSpotId)) {
+      throw new DomainBusinessException("Spot not available");
+    }
+
+    if (this.spotReservationRepository.findById(eventSpotId).isPresent()) {
+      throw new DomainBusinessException("Spot already reserved");
+    }
+
+    final var section = event.searchSectionOrElseThrow(item -> item.getId().equals(eventSectionId));
+
+    return this.unitOfWork.execute(
+      transaction -> {
+        final var spotReservation = SpotReservation.create(new CreateSpotReservationCommand(eventSpotId, customer.getId()));
+
+        this.spotReservationRepository.add(spotReservation);
+
+        transaction.commit();
+
+        final var order = Order.create(customer.getId(), section.getPrice(), eventSpotId);
+
+        this.orderRepository.add(order);
+
+        transaction.commit();
+
+        event.markSpotAsReserved(eventSectionId, eventSpotId);
+
+        this.eventRepository.add(event);
+
+        return order;
+      },
+      (transaction, exception) -> {
+        final var order = Order.create(customer.getId(), section.getPrice(), eventSpotId);
+        order.cancel();
+        this.orderRepository.add(order);
+        throw new DomainBusinessException("An error occurred while creating the order");
       }
-
-      if (this.spotReservationRepository.findById(eventSpotId).isPresent()) {
-        throw new DomainBusinessException("Spot already reserved");
-      }
-
-      final var spotReservation = SpotReservation.create(new CreateSpotReservationCommand(eventSpotId, customer.getId()));
-
-      this.spotReservationRepository.add(spotReservation);
-
-      final var section = event.searchSectionOrElseThrow(item -> item.getId().equals(eventSectionId));
-
-      final var order = Order.create(customer.getId(), section.getPrice(), eventSpotId);
-
-      this.orderRepository.add(order);
-
-      event.markSpotAsReserved(eventSectionId, eventSpotId);
-
-      this.eventRepository.add(event);
-
-      return order;
-    });
+    );
   }
 
 }
