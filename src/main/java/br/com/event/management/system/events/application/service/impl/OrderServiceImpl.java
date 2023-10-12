@@ -8,6 +8,7 @@ import br.com.event.management.system.common.domain.valueobjects.EventSectionId;
 import br.com.event.management.system.common.domain.valueobjects.EventSpotId;
 import br.com.event.management.system.events.application.dto.CreateOrderInput;
 import br.com.event.management.system.events.application.service.OrderService;
+import br.com.event.management.system.events.application.service.PaymentGateway;
 import br.com.event.management.system.events.domain.commands.CreateSpotReservationCommand;
 import br.com.event.management.system.events.domain.entities.Order;
 import br.com.event.management.system.events.domain.entities.SpotReservation;
@@ -31,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
   private final EventRepository eventRepository;
 
   private final SpotReservationRepository spotReservationRepository;
+
+  private final PaymentGateway paymentGateway;
 
   private final UnitOfWork unitOfWork;
 
@@ -60,6 +63,8 @@ public class OrderServiceImpl implements OrderService {
 
     return this.unitOfWork.execute(
       transaction -> {
+        this.paymentGateway.payment(input.cardToken(), section.getPrice());
+
         final var spotReservation = SpotReservation.create(new CreateSpotReservationCommand(eventSpotId, customer.getId()));
 
         this.spotReservationRepository.add(spotReservation);
@@ -67,6 +72,8 @@ public class OrderServiceImpl implements OrderService {
         transaction.commit();
 
         final var order = Order.create(customer.getId(), section.getPrice(), eventSpotId);
+
+        order.pay();
 
         this.orderRepository.add(order);
 

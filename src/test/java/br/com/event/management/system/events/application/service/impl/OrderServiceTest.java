@@ -47,7 +47,6 @@ class OrderServiceTest {
   @Autowired
   private SpotReservationRepository spotReservationRepository;
 
-
   @Test
   @DisplayName("Should create order")
   void test1() {
@@ -73,7 +72,8 @@ class OrderServiceTest {
         event.getId().value(),
         section.getId().value(),
         eventSpot.getId().value(),
-        customer.getId().value()
+        customer.getId().value(),
+        "card-token"
       ))
     );
     final var asyncOrder2 = CompletableFuture.supplyAsync(
@@ -81,7 +81,8 @@ class OrderServiceTest {
         event.getId().value(),
         section.getId().value(),
         eventSpot.getId().value(),
-        customer.getId().value()
+        customer.getId().value(),
+        "card-token"
       ))
     );
     final var asyncAll = CompletableFuture.allOf(asyncOrder1, asyncOrder2);

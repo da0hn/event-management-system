@@ -6,6 +6,7 @@ public record CreateOrderInput(
   UUID eventId,
   UUID sectionId,
   UUID spotId,
-  UUID customerId
+  UUID customerId,
+  String cardToken
 ) {
 }
