@@ -10,6 +10,25 @@ services:
       - MYSQL_DATABASE=events
     networks:
       - event-management-system-network
+  redis:
+    image: redis:7.0.8-alpine
+    container_name: event-management-system-redis
+    ports:
+      - "26379:6379"
+    networks:
+      - event-management-system-network
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    hostname: rabbitmq
+    container_name: event-management-system-rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - event-management-system-network
 
 
 networks:
