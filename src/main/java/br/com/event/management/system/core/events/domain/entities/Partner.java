@@ -4,8 +4,10 @@ import br.com.event.management.system.core.common.domain.AggregateRoot;
 import br.com.event.management.system.core.common.domain.Entity;
 import br.com.event.management.system.core.common.domain.valueobjects.PartnerId;
 import br.com.event.management.system.core.events.domain.commands.CreateEventCommand;
-import br.com.event.management.system.core.events.domain.commands.InitializeEventCommand;
 import br.com.event.management.system.core.events.domain.commands.CreatePartnerCommand;
+import br.com.event.management.system.core.events.domain.commands.InitializeEventCommand;
+import br.com.event.management.system.core.events.domain.events.PartnerChangedName;
+import br.com.event.management.system.core.events.domain.events.PartnerCreated;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -21,7 +23,9 @@ public class Partner extends AggregateRoot<PartnerId> {
   }
 
   public static Partner create(final CreatePartnerCommand command) {
-    return new Partner(PartnerId.newInstance(), command.name());
+    final var partner = new Partner(PartnerId.newInstance(), command.name());
+    partner.addEvent(PartnerCreated.of(partner));
+    return partner;
   }
 
   public Event initializeEvent(final InitializeEventCommand command) {
@@ -37,6 +41,7 @@ public class Partner extends AggregateRoot<PartnerId> {
 
   public void changeName(final String name) {
     this.name = name;
+    this.addEvent(PartnerChangedName.of(this));
   }
 
   @Override
