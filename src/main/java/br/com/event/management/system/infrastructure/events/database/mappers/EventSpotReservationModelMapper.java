@@ -13,7 +13,7 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(
-  unmappedTargetPolicy = ReportingPolicy.ERROR,
+  unmappedTargetPolicy = ReportingPolicy.WARN,
   injectionStrategy = InjectionStrategy.CONSTRUCTOR,
   componentModel = MappingConstants.ComponentModel.SPRING
 )

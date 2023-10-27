@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.stream.Collectors;
 
 @Mapper(
-  unmappedTargetPolicy = ReportingPolicy.ERROR,
+  unmappedTargetPolicy = ReportingPolicy.WARN,
   componentModel = MappingConstants.ComponentModel.SPRING,
   injectionStrategy = InjectionStrategy.CONSTRUCTOR,
   uses = { PartnerModelMapper.class, EventSectionModelMapper.class })
