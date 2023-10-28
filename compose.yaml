@@ -22,8 +22,8 @@ services:
     hostname: rabbitmq
     container_name: event-management-system-rabbitmq
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "15600:15672"
+      - "5600:5672"
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
