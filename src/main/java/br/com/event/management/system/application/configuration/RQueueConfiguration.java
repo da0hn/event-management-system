@@ -33,12 +33,12 @@ public class RQueueConfiguration {
   }
 
   @Bean
-  public RqueueMessageHandler rqueueMessageHandler(final MessageConverter jsonMessageConverter) {
-    return new RqueueMessageHandler(jsonMessageConverter);
+  public RqueueMessageHandler rqueueMessageHandler(final MessageConverter mappingJackson2MessageConverter) {
+    return new RqueueMessageHandler(mappingJackson2MessageConverter);
   }
 
   @Bean
-  public MessageConverter jsonMessageConverter(final ObjectMapper objectMapper) {
+  public MessageConverter mappingJackson2MessageConverter(final ObjectMapper objectMapper) {
     final var mappingJackson2MessageConverter = new MappingJackson2MessageConverter();
     mappingJackson2MessageConverter.setObjectMapper(objectMapper);
     return mappingJackson2MessageConverter;
